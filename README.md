@@ -54,3 +54,16 @@ de persona/actividad/dimensión/valor, con las siguientes columnas:
 La variable `flag_consumo` (derivada en `src/data.py`) marca si esa persona consume esa
 actividad, usada como base para la mayoría de los gráficos.
 
+
+## Deploy con Docker
+
+```bash
+docker build -t tablero-encc .
+docker run -p 8000:8000 tablero-encc
+```
+
+La app queda en `http://localhost:8000`. Para usar otro puerto: `docker run -e PORT=9000 -p 9000:9000 tablero-encc`.
+
+Sin Docker: `pip install -r requirements.txt` y `gunicorn app:server --bind 0.0.0.0:8000 --timeout 120`
+(siempre desde la raíz del proyecto, porque el CSV se lee por ruta relativa `data/encc_looker_base.csv`;
+se puede cambiar con la variable `DATA_PATH`).
