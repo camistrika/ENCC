@@ -9,6 +9,7 @@ app = Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,
 )
+server = app.server  # para gunicorn en el deploy
 
 df_all = load_data()
 
@@ -143,4 +144,5 @@ def clear_filters(n):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8051)
+    import os
+    app.run(debug=os.getenv("DEBUG") == "1", port=int(os.getenv("PORT", 8051)))
